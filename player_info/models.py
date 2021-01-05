@@ -16,6 +16,9 @@ class P_info(models.Model):
     club_name = models.ForeignKey(Club_model,on_delete=models.CASCADE)
     posted_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
 
+    def __int__(self):
+        return self.rating
+
 
 
 

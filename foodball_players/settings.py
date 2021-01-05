@@ -37,11 +37,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "graphql_auth",
+    'django_filters',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'graphene_django',
     'player_info',
     'club',
     
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+
+    # optional
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+}
 GRAPHENE = {
     'SCHEMA': 'foodball_players.schema.schema',
     'MIDDLEWARE': [
@@ -88,14 +100,18 @@ WSGI_APPLICATION = 'foodball_players.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'scout', 
+        'USER': 'postgres', 
+        'PASSWORD': 'alek',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
     }
 }
 
 
 AUTHENTICATION_BACKENDS = [
-    'graphql_jwt.backends.JSONWebTokenBackend',
+    "graphql_auth.backends.GraphQLAuthBackend",
     'django.contrib.auth.backends.ModelBackend',
 ]
 
